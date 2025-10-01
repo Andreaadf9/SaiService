@@ -38,7 +38,7 @@ let footer = `<footer class="footer-section ">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-50 pb-5 d-flex justify-content-center">
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="/img/LogominiSai.png" class="img-fluid" alt="logo"></a>
+                            <a href="index.html"><img src="img/LogominiSai.png" class="img-fluid" alt="logo"></a>
                         </div>
                         <div class="footer-text">
                             <p>Siamo un'azienda di traslochi</p>

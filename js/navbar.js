@@ -15,7 +15,7 @@ function navbar() {
      style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">    <div class="container-fluid">
       <!-- Logo -->
       <a class="navbar-brand text-dark d-flex align-items-center" href="/index.html">
-        <img src="/img/LogominiSaiNs.png" alt="Logo" class="img-fluid me-2" style="height: 60px;">
+        <img src="img/LogominiSaiNs.png" alt="Logo" class="img-fluid me-2" style="height: 60px;">
       </a>
 
       <!-- Theme Toggle cambio tema prima era qui  -->
@@ -78,7 +78,7 @@ function navbar() {
       <div class="offcanvas offcanvas-start text-bg-dark animated-slide d-xxl-none" tabindex="-1" id="offcanvasNavbar"style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif;">
         <div class="offcanvas-header border-bottom border-light">
           <h5 class="offcanvas-title">
-            <img src="/img/LogominiSaiNs.png" alt="Logo" style="height: 60px;">
+            <img src="img/LogominiSaiNs.png" alt="Logo" style="height: 60px;">
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
