@@ -14,7 +14,7 @@ function navbar() {
 <nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
      style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">    <div class="container-fluid">
       <!-- Logo -->
-      <a class="navbar-brand text-dark d-flex align-items-center" href="/index.html">
+      <a class="navbar-brand text-dark d-flex align-items-center" href="index.html">
         <img src="img/LogominiSaiNs.png" alt="Logo" class="img-fluid me-2" style="height: 60px;">
       </a>
 
@@ -33,9 +33,9 @@ function navbar() {
             <i data-lucide="briefcase" class="me-1"></i> Azienda
           </a>
           <ul class="dropdown-menu animate__animated animate__fadeIn">
-            <li><a class="dropdown-item" href="/profilo.html">Profilo</a></li>
-            <li><a class="dropdown-item" href="/index.html#certificazioni">Certificazioni</a></li>
-            <li><a class="dropdown-item" href="/profilo.html#storia">Storia</a></li>
+            <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
+            <li><a class="dropdown-item" href="index.html#certificazioni">Certificazioni</a></li>
+            <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
             
           </ul>
         </li>
@@ -45,24 +45,24 @@ function navbar() {
           </a>
           <ul class="dropdown-menu animate__animated animate__fadeIn">
             
-            <li><a class="dropdown-item" href="/logisticaTraslochi.html">Logistica & Traslochi</a></li>
-              <li><a class="dropdown-item" href="/library.html">Library</a></li>
-            <li><a class="dropdown-item" href="/pulizie.html">Pulizie civili & Industriali</a></li>
-            <li><a class="dropdown-item" href="/facility.html">Facility Managment</a></li>
+            <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
+              <li><a class="dropdown-item" href="library.html">Library</a></li>
+            <li><a class="dropdown-item" href="pulizie.html">Pulizie civili & Industriali</a></li>
+            <li><a class="dropdown-item" href="facility.html">Facility Managment</a></li>
           
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/partenr.html"><i data-lucide="users" class="me-1"></i> Partners</a>
+          <a class="nav-link" href="partenr.html"><i data-lucide="users" class="me-1"></i> Partners</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="/profilo.html">Chi Siamo</a>
+          <a class="nav-link" href="profilo.html">Chi Siamo</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/index.html#btnContatti">Contatti</a>
+          <a class="nav-link" href="index.html#btnContatti">Contatti</a>
         </li>
         <li class="nav-item">
-                <a class="nav-link text-white" href="/index.html"><i class="fa-solid fa-house"></i> Home</a>
+                <a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a>
           
         </li>
         <li class="nav-item">
@@ -87,23 +87,23 @@ function navbar() {
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Azienda</a>
                   <ul class="dropdown-menu animate__animated animate__fadeIn">
-                    <li><a class="dropdown-item" href="/profilo.html">Profilo</a></li>
-                    <li><a class="dropdown-item" href="/index.html#Certificazioni">Certificazioni</a></li>
-                    <li><a class="dropdown-item" href="/profilo.html#storia">Storia</a></li>
+                    <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
+                    <li><a class="dropdown-item" href="index.html#Certificazioni">Certificazioni</a></li>
+                    <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
                     
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Servizi</a>
                   <ul class="dropdown-menu animate__animated animate__fadeIn">
-                    <li><a class="dropdown-item" href="/logisticaTraslochi.html">Logistica & Traslochi</a></li>
-                    <li><a class="dropdown-item" href="/library.html">Library</a></li>
-                    <li><a class="dropdown-item" href="/pulizie.html">Pulizie</a></li>
-                    <li><a class="dropdown-item" href="/facility.html">Facility</a></li>
+                    <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
+                    <li><a class="dropdown-item" href="library.html">Library</a></li>
+                    <li><a class="dropdown-item" href="pulizie.html">Pulizie</a></li>
+                    <li><a class="dropdown-item" href="facility.html">Facility</a></li>
                   </ul>
                 </li>
-                <li><a class="nav-link text-white" href="/partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
-                <li><a class="nav-link text-white" href="/index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a class="nav-link text-white" href="partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
+                <li><a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
                  <li class="nav-item">
         <button class="themeToggle btn btn-sm text-white me-3 rounded-circle p-2" style="background-color: rgba(255,255,255,0.3);">
   <i data-lucide="sun"></i>
