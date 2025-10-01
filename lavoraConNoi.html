@@ -1,0 +1,197 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lavora con Noi | SAI Service</title>
+  <meta name="description" content="Entra nel team SAI Service. Posizioni aperte: Autista C2, Operatore generico, Amministrativo. Invia la tua candidatura con CV." />
+
+  <!-- CSS / Fonts -->
+  <meta name="description" content="">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css01.css">
+  <link rel="stylesheet" href="navbar.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Animate.css per animazioni dropdown -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  
+
+  <style>
+    :root{ --sai-blue:#257cc2; --sai-accent:#60aaff; --sai-ink:#0f2233; }
+    body{ font-family:'Montserrat',sans-serif; background:#f7fbff; color:var(--sai-ink); -webkit-font-smoothing:antialiased; }
+
+    /* HERO */
+    .hero-jobs { position: relative; min-height: 56vh; display:flex; align-items:center; justify-content:center; overflow:hidden; color:#fff; border-bottom:1px solid rgba(0,0,0,0.04); }
+    .hero-jobs .hero-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; display:block; }
+    .hero-jobs .overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(5,29,45,0.65), rgba(5,29,45,0.40)); z-index:1; pointer-events:none; }
+    .hero-jobs .hero-inner { position:relative; z-index:2; text-align:center; padding:2.2rem 1rem; max-width:1100px; }
+    .hero-jobs h1{ font-weight:700; font-size:clamp(1.6rem,3.6vw,2.4rem); margin-bottom:.25rem; }
+    .hero-jobs p.lead{ color:rgba(255,255,255,0.95); max-width:900px; margin:0 auto 1rem; font-size:1.02rem; }
+
+    /* jobs list */
+    .job-card{ background:#fff; border-radius:12px; padding:1.4rem; box-shadow:0 12px 30px rgba(18,64,110,0.06); transition: transform .18s, box-shadow .18s; height:100%; }
+    .job-card:hover{ transform:translateY(-6px); box-shadow:0 20px 50px rgba(18,64,110,0.09); }
+    .job-card i{ font-size:2rem; color:var(--sai-blue); margin-bottom:.6rem; }
+
+    /* apply box */
+    .apply-box{ background:#fff; padding:1.4rem; border-radius:12px; box-shadow:0 12px 30px rgba(18,64,110,0.06); }
+    .form-note{ font-size:.9rem; color:#577086; margin-top:.6rem; }
+
+    .small-muted{ color:#6b7f8f; font-size:.95rem; }
+
+    /* success / error alert */
+    .formResult{ display:none; margin-top:1rem; }
+
+    @media (max-width:768px){ .hero-jobs{ min-height:44vh } .hero-jobs p.lead{ font-size:0.98rem } }
+  </style>
+</head>
+<body>
+  <!-- navbar (inserito dinamicamente dal tuo navbar.js) -->
+  <div class="navbarMain"></div>
+
+  <!-- HERO con canvas migliorato -->
+  <header class="hero-jobs">
+    <canvas id="heroCanvasJobs" class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner container animate__animated animate__fadeInDown">
+      <p class="text-uppercase small-muted mb-1">Lavora con SAI Service</p>
+      <h1>Unisciti al team. Cresciamo insieme.</h1>
+      <p class="lead">Formazione, sicurezza, rispetto e pari opportunità: cerchiamo persone concrete e motivate per ruoli operativi e amministrativi.</p>
+      <div class="email-contact fw-semibold" style="margin-top:.6rem;">
+        Oppure invia direttamente: <a href="mailto:candidature@saiservice.it" style="color:#dff3ff;text-decoration:underline">candidature@saiservice.it</a>
+      </div>
+    </div>
+  </header>
+  <section class="py-5">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-7">
+          <h2 class="fw-bold mb-3" style="color:var(--sai-blue)">Perché lavorare con noi</h2>
+          <p class="mb-3">SAI Service è un ambiente professionale, con percorsi formativi interni, attenzione alla sicurezza e politiche concrete per la parità di genere. Offriamo stabilità, crescita e benefit legati alle performance.</p>
+          <ul class="mb-0">
+            <li class="mb-2">Formazione continua on-the-job</li>
+            <li class="mb-2">Contratti chiari e benefit legati alla produttività</li>
+            <li class="mb-2">Impegno verso sostenibilità e inclusione</li>
+          </ul>
+        </div>
+        <div class="col-lg-5 text-center">
+          <img src="/img/LavoraConNoi.png" alt="Team SAI Service" class="img-fluid rounded shadow-sm" style="max-width:420px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-4 ">
+    <div class="container" >
+      <h3 class="fw-bold text-center mb-4">Posizioni aperte</h3>
+      <div class="row g-4" style="color: black;">
+        <div class="col-md-4">
+          <div class="job-card">
+            <i class="fa-solid fa-truck"></i>
+            <h5 class="fw-bold">Autista C2</h5>
+            <p class="small-muted">Patente C2 obbligatoria. Guida di mezzi, gestione documenti di trasporto, trasferte e carico/scarico.</p>
+            <div class="mt-3"><span class="badge bg-primary">Full-time</span></div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="job-card">
+            <i class="fa-solid fa-people-carry-box"></i>
+            <h5 class="fw-bold">Operatore generico</h5>
+            <p class="small-muted">Supporto alle squadre, imballaggio, movimentazione. Formazione interna inclusa.</p>
+            <div class="mt-3"><span class="badge bg-primary">Part-time / Full-time</span></div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="job-card">
+            <i class="fa-solid fa-briefcase"></i>
+            <h5 class="fw-bold">Amministrativo</h5>
+            <p class="small-muted">Gestione documentale, rapporti con clienti/fornitori, organizzazione. Precisione e competenze informatiche richieste.</p>
+            <div class="mt-3"><span class="badge bg-primary">Impiegatizio</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <h3 class="fw-bold text-center mb-4">Invia la tua candidatura</h3>
+      <div class="row justify-content-center" style="color: black;">
+        <div class="col-lg-8">
+          <div class="apply-box">
+            <form id="applyForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nome e Cognome</label>
+                  <input type="text" id="nome" name="nome" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Telefono</label>
+                  <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="+39..." required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Email</label>
+                  <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Posizione desiderata</label>
+                  <select id="posizione" name="posizione" class="form-select" required>
+                    <option value="">-- Seleziona --</option>
+                    <option>Autista C2</option>
+                    <option>Operatore generico</option>
+                    <option>Amministrativo</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Breve presentazione</label>
+                  <textarea id="messaggio" name="messaggio" class="form-control" rows="4" placeholder="Parlaci di te e delle tue esperienze"></textarea>
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label">Carica il CV (pdf/doc)</label>
+                  <input type="file" id="cvFile" name="cvFile" class="form-control" accept=".pdf,.doc,.docx" required>
+                  <div class="form-note">Max 50 KB. <br>Inviando la tua candidatura Autorizzi il trattamento dei miei dati personali per finalità di selezione del personale ai sensi del D. Lgs. 196/2003 e del Regolamento UE 2016/679 (GDPR). Trasmessi in conformità alla normativa vigente.
+                  </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                  <button type="submit" class="btn btn-primary w-100">Invia candidatura</button>
+                </div>
+
+                <div class="col-12">
+                  <div id="formResult" class="formResult alert" role="alert"></div>
+                </div>
+              </div>
+            </form>
+
+            <hr class="my-4" />
+            <div class="text-center small-muted">
+              Se preferisci invia direttamente a <a href="mailto:candidature@saiservice.it">candidature@saiservice.it</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="footer"></div>
+
+  <!-- SCRIPTS -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/0e6886c2-b323-4f60-804d-b0120f86efe2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/navbar.js"></script>
+  <script src="/footer.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="invioCand.js"></script>
+</body>
+</html>

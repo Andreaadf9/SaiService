@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pulizie Civili & Industriali – SAI Service</title>
+  <meta name="description" content="Servizio Pulizie civili e industriali di SAI Service: competenze, personale qualificato, prodotti eco-friendly, interventi per aziende, uffici, PA e privati." />
+
+  <!-- CSS & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="/css01.css">
+  <link rel="stylesheet" href="/navbar.css">
+
+  <style>
+    :root{
+      --sai-blue:#257cc2;
+      --sai-light:#60aaff;
+      --sai-ink:#0f2233;
+      --sai-soft:#f3f8ff;
+    }
+    body{font-family:'Montserrat',sans-serif;background:var(--sai-soft);color:var(--sai-ink);}
+
+    /* HERO */
+    .hero-cleaning{position:relative;min-height:62vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(180deg,#12304a 0%, #163a57 60%);} 
+    .hero-cleaning .overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(9,38,63,0.45), rgba(9,38,63,0.25));z-index:0}
+    .hero-cleaning .hero-inner{position:relative;z-index:2;text-align:center;padding:3rem 1rem;color:#fff}
+    .hero-cleaning h1{font-weight:700;line-height:1.05;font-size:clamp(1.8rem,4vw,3rem)}
+    .hero-cleaning p.lead{color:rgba(255,255,255,0.92);max-width:900px;margin:0 auto 1.4rem}
+
+    /* Canvas */
+    .hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+    /* Sections */
+    .section {padding:64px 0}
+    .section.alt{background:#fff}
+    .section .section-title{color:var(--sai-blue);font-weight:700;margin-bottom:12px}
+    .section .divider{width:72px;height:4px;background:linear-gradient(90deg,var(--sai-blue),var(--sai-light));border-radius:4px;margin:10px 0 22px}
+
+    /* Cards */
+    .service-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 10px 30px rgba(10,35,60,0.06);transition:transform .18s ease}
+    .service-card:hover{transform:translateY(-6px)}
+    .service-icon{width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg,rgba(96,170,255,0.12),rgba(37,124,194,0.08));display:inline-grid;place-items:center;margin-bottom:12px;color:var(--sai-blue);font-size:1.4rem}
+
+    /* Timeline */
+    .timeline{position:relative;padding-left:24px}
+    .timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--sai-light),var(--sai-blue));border-radius:4px}
+    .tl-item{position:relative;margin-bottom:28px}
+    .tl-item::before{content:'';position:absolute;left:-6px;top:6px;width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid var(--sai-blue);box-shadow:0 0 0 6px rgba(37,124,194,0.06)}
+    .mb-1{margin-left: 2rem;}
+
+    /* Features */
+    .feature-list li{margin-bottom:.8rem}
+    .feature-list i{color:var(--sai-blue);margin-right:10px}
+
+    /* CTA */
+    .cta-strip{background:linear-gradient(90deg,var(--sai-blue),var(--sai-light));color:#fff;padding:42px 0;text-align:center;border-radius:12px}
+    .cta-strip a{font-weight:600}
+
+    /* Responsive tweaks */
+    @media (max-width:768px){
+      .hero-cleaning{min-height:46vh}
+      .hero-cleaning p.lead{font-size:0.98rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="navbarMain"></div>
+
+  <!-- HERO with automatic animated canvas (flowing ribbons) -->
+  <section class="hero-cleaning">
+    <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner container animate__animated animate__fadeInDown">
+      <p class="small text-uppercase fw-semibold mb-2" style="letter-spacing:.18em;opacity:.9">Pulizie Civili & Industriali</p>
+      <h1 class="mb-3">Pulizie professionali per aziende, uffici, pubbliche amministrazioni e privati</h1>
+      <p class="lead mb-4">SAI Service unisce esperienza e metodi certificati per interventi di pulizia e sanificazione efficaci, rapidi e rispettosi dell'ambiente. Il nostro team utilizza prodotti selezionati, attrezzature professionali e protocolli di sicurezza per garantire risultati costanti e verificabili.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="/index.html#btnContatti" class="btn btn-light btn-lg"><i class="fa-solid fa-envelope me-2"></i>Richiedi info</a>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Perché scegliere SAI Service</h2>
+        <div class="divider mx-auto"></div>
+        <p class="mx-auto" style="max-width:900px;color:#4a647f">Il nostro know‑how nelle pulizie civili e industriali nasce dall’esperienza diretta in cantieri, stabilimenti, uffici e strutture pubbliche. Offriamo servizi su misura e protocolli specifici per ogni contesto: dal piccolo ufficio alle linee produttive, dai poli sanitari agli ambienti culturali.</p>
+      </div>
+
+      <div class="row g-4" style="color: black;">
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-building"></i></div>
+            <h5>Pulizie per Aziende</h5>
+            <p class="mb-0">Interventi programmati e straordinari, gestione rifiuti, pulizie post-lavoro e manutenzioni periodiche per ambienti produttivi.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-briefcase"></i></div>
+            <h5>Uffici e spazi di lavoro</h5>
+            <p class="mb-0">Sanificazione aree comuni, postazioni, sale meeting; utilizziamo prodotti certificati e tecniche a basso impatto ambientale.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-landmark"></i></div>
+            <h5>Pubblica Amministrazione</h5>
+            <p class="mb-0">Procedure tracciate, rispetto delle normative e interventi coordinati per enti pubblici, scuole e strutture sanitarie.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-house"></i></div>
+            <h5>Privati</h5>
+            <p class="mb-0">Pulizie domestiche, interventi post-ristrutturazione e sanificazioni per abitazioni con attenzione all’ambiente e alla sicurezza.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-industry"></i></div>
+            <h5>Spazi Industriali</h5>
+            <p class="mb-0">Pulizie tecniche per capannoni, linee produzione, rimozione particolato e detergenze specialistiche per macchinari.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card p-3 h-100">
+            <div class="service-icon"><i class="fa-solid fa-hands-helping"></i></div>
+            <h5>Facility & Contract</h5>
+            <p class="mb-0">Gestione completa delle attività di cleaning integrata ai servizi di facility management per continuità operativa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section class="section alt">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h3 class="section-title">Il nostro metodo</h3>
+          <div class="divider mb-3"></div>
+          <p class="mb-3" style="color: black;">Ogni intervento SAI Service è costruito attorno alle esigenze del cliente. Applichiamo protocolli standardizzati e verificabili, integrando tecnologie moderne e prodotti a basso impatto ambientale.</p>
+
+          <div class="timeline" style="color: black;">
+            <div class="tl-item">
+              <h6 class="mb-1"><strong><span></span>1. Sopralluogo tecnico</strong></h6>
+              <p class="mb-0">Valutazione ambienti, analisi rischi e definizione delle aree critiche.</p>
+            </div>
+            <div class="tl-item">
+              <h6 class="mb-1"><strong>2. Piano operativo</strong></h6>
+              <p class="mb-0">Programmazione tempistiche, prodotti e DPI, definizione del team e calendario interventi.</p>
+            </div>
+            <div class="tl-item">
+              <h6 class="mb-1"><strong>3. Esecuzione specialistica</strong></h6>
+              <p class="mb-0">Interventi con macchinari professionali, sanificazioni, trattamento pavimenti e pulizie tecniche.</p>
+            </div>
+            <div class="tl-item">
+              <h6 class="mb-1"><strong>4. Controllo qualità</strong></h6>
+              <p class="mb-0">Checklist di ispezione, report fotografico e rilascio documentazione di conformità.</p>
+            </div>
+            <div class="tl-item">
+              <h6 class="mb-1"><strong>5. Assistenza post-intervento</strong></h6>
+              <p class="mb-0">Piani di manutenzione programmata, interventi di emergenza e contratti di facility.</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-6">
+          <img src="/img/pulizie1.png" alt="Pulizie industriali" class="img-fluid rounded shadow-sm mx-auto d-block">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES -->
+  <section class="section">
+    <div class="container">
+      <div class="row g-4 align-items-stretch" style="color: black;">
+        <div class="col-md-4">
+          <div class="service-card h-100 text-center">
+            <div class="mb-2"><i class="fa-solid fa-shield-halved fa-2x text-primary"></i></div>
+            <h5 class="fw-bold">Personale qualificato</h5>
+            <p class="mb-0">Operatori formati secondo le migliori pratiche di sicurezza e igiene, aggiornati su normative e protocolli.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-card h-100 text-center">
+            <div class="mb-2"><i class="fa-solid fa-leaf fa-2x text-success"></i></div>
+            <h5 class="fw-bold">Prodotti eco‑friendly</h5>
+            <p class="mb-0">Soluzioni sostenibili e certificate per ridurre l’impatto ambientale senza rinunciare all'efficacia.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-card h-100 text-center">
+            <div class="mb-2"><i class="fa-solid fa-clock fa-2x text-warning"></i></div>
+            <h5 class="fw-bold">Interventi flessibili</h5>
+            <p class="mb-0">Programmi di lavoro notturni e nel weekend per non interferire con la produttività aziendale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h4 class="section-title">Domande frequenti</h4>
+          <div class="divider"></div>
+          <div class="accordion" id="faqCleaning">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q1c">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1c">Che prodotti usate?</button>
+              </h2>
+              <div id="a1c" class="accordion-collapse collapse show" data-bs-parent="#faqCleaning">
+                <div class="accordion-body">Utilizziamo prodotti professionali certificati, disponibili anche in versione eco‑friendly su richiesta del cliente.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q2c">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2c">Offrite sanificazioni certificate?</button>
+              </h2>
+              <div id="a2c" class="accordion-collapse collapse" data-bs-parent="#faqCleaning">
+                <div class="accordion-body">Sì: programmi di sanificazione con rilascio di report e certificazioni di avvenuto intervento su richiesta.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q3c">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3c">Fornite servizi continuativi?</button>
+              </h2>
+              <div id="a3c" class="accordion-collapse collapse" data-bs-parent="#faqCleaning">
+                <div class="accordion-body">Sì, gestiamo contratti di pulizia quotidiana, settimanale o personalizzati, con KPI e verifiche periodiche.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center">
+          <img src="/img/sanificazione.jpg" alt="Sanificazione" class="img-fluid rounded shadow-sm" style="max-width:420px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-strip">
+        <h3 class="mb-2">Servizio di pulizia professionale per la tua realtà</h3>
+        <p class="mb-3">Contatta SAI Service per un sopralluogo gratuito e un preventivo personalizzato.</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="mailto:sai@saitraslochi.it" class="btn btn-light"><i class="fa-solid fa-envelope me-2"></i> sai@saitraslochi.it</a>
+          <a href="tel:+39069109845" class="btn btn-outline-light text-white" style="border-color:rgba(255,255,255,0.18)"><i class="fa-solid fa-phone me-2"></i> 06 9109845</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer"></div>
+
+  <!-- Scripts -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/0e6886c2-b323-4f60-804d-b0120f86efe2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/navbar.js"></script>
+  <script src="/footer.js"></script>
+  <script>
+    // ensure lucide icons render
+    document.addEventListener('DOMContentLoaded', () => { if (window.lucide) lucide.createIcons(); });
+
+    // HERO canvas: flowing ribbons animation (automatic, no mouse interaction)
+    (function(){
+      const canvas = document.getElementById('heroCanvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr;
+
+      function resize(){
+        dpr = window.devicePixelRatio || 1;
+        w = canvas.offsetWidth;
+        h = canvas.offsetHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpr,dpr);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Ribbon layers configuration (colors are in blu/azzurro/grigio azzurro palette)
+      const layers = [
+        {color:'#0f3b57', amp:40, freq:0.0021, speed:0.35, y:0.22, opacity:0.85},
+        {color:'#1a5e88', amp:55, freq:0.0016, speed:0.25, y:0.38, opacity:0.72},
+        {color:'#257cc2', amp:75, freq:0.0012, speed:0.2, y:0.6, opacity:0.68},
+        {color:'#60aaff', amp:95, freq:0.0009, speed:0.15, y:0.82, opacity:0.55}
+      ];
+
+      // draw single ribbon across canvas using sine waves
+      function drawRibbon(layer, t){
+        const step = Math.max(14, Math.round(w/80));
+        ctx.beginPath();
+        // start bottom-left
+        ctx.moveTo(0, h + 50);
+        // left top to first point
+        ctx.lineTo(0, h * layer.y + Math.sin(0 * layer.freq + layer.speed * t) * layer.amp);
+        // waveform across
+        for(let x=0;x<=w;x+=step){
+          const y = h * layer.y + Math.sin((x*layer.freq) + layer.speed * t + layer.freq*100) * layer.amp;
+          ctx.lineTo(x, y);
+        }
+        // close to bottom-right
+        ctx.lineTo(w, h + 50);
+        ctx.closePath();
+
+        // gradient fill
+        const g = ctx.createLinearGradient(0, h*layer.y - layer.amp, 0, h);
+        // create softer gradient stops
+        g.addColorStop(0, hexToRgba(layer.color, layer.opacity*1.0));
+        g.addColorStop(0.5, hexToRgba(layer.color, layer.opacity*0.55));
+        g.addColorStop(1, hexToRgba('#0b1c2b', 0.0));
+
+        ctx.fillStyle = g;
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fill();
+        ctx.globalCompositeOperation = 'lighter';
+      }
+
+      // helper: hex to rgba
+      function hexToRgba(hex, alpha){
+        const c = hex.replace('#','');
+        const r = parseInt(c.substring(0,2),16);
+        const g = parseInt(c.substring(2,4),16);
+        const b = parseInt(c.substring(4,6),16);
+        return `rgba(${r},${g},${b},${alpha})`;
+      }
+
+      // subtle moving highlights overlay
+      function drawHighlights(t){
+        const grd = ctx.createLinearGradient(0,0,w,0);
+        grd.addColorStop(0, 'rgba(96,170,255,0.06)');
+        grd.addColorStop(0.5, 'rgba(37,124,194,0.03)');
+        grd.addColorStop(1, 'rgba(11,28,43,0.02)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,w,h);
+      }
+
+      // animate
+      let lastTime = 0;
+      function animate(time){
+        const t = time * 0.001; // seconds
+        ctx.clearRect(0,0,w,h);
+        // draw layers back-to-front
+        for(let i=0;i<layers.length;i++){
+          drawRibbon(layers[i], t + i*0.7);
+        }
+        drawHighlights(t);
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traslochi| Sai Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css01.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="/preventivatore.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2e8ef8c44.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="/servizi.css">
+    <meta name="description"
+        content="Sai Service è un'azienda con più di 10 anni di esperienza nel settore della logistica e dei traslochi scopri i suoi servizi e richiedi un preventivo gratuito, professionalità, rapidità e sicurezza sono la nostra priorità">
+</head>
+
+<body>
+    <div class="navbarMain"></div>
+
+    <section id="hero" class="d-flex align-items-center justify-content-center text-center">
+        <div class="container hero-content animate__animated animate__fadeInDown">
+            <h1 class="display-4 fw-bold">Logistica & Traslochi di Eccellenza</h1>
+            <p class="lead mt-3">Da oltre 20 anni Sai service unisce esperienza e innovazione per soluzioni su misura
+                nel settore traslochi e logistica.</p>
+            <a href="#servizi" class="btn btn-primary btn-lg mt-4">Scopri i nostri servizi</a>
+        </div>
+    </section>
+
+    <section id="servizi" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">I nostri servizi</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card service-card h-100 p-3" data-service="traslochi">
+                        <i data-lucide="truck" class="display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Traslochi Privati & Aziendali</h5>
+                        <p class="card-text">Coordinamento completo dalla pianificazione al disimballaggio finale, con
+                            mezzi dedicati e personale specializzato.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card service-card h-100 p-3" data-service="logistica">
+                        <i data-lucide="box" class="display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Magazzinaggio & Logistica</h5>
+                        <p class="card-text">Deposito temporaneo e gestione magazzino con monitoraggio digitale e
+                            sicurezza 24/7.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card service-card h-100 p-3" data-service="supply">
+                        <i data-lucide="server" class="display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Gestione Supply Chain</h5>
+                        <p class="card-text">Ottimizzazione flussi logistici grazie al nostro software proprietario per
+                            tracciabilità in real-time.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="dettaglio-servizio" class="mt-5 animate__animated animate__fadeIn" style="display: none;"></div>
+        </div>
+    </section>
+
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 10vh;">
+        <button class="btn btn-primary mt-3" id="btnTogglePreventivatore" type="button">
+            Fai il tuo preventivo <i class="fa-sharp fa-solid fa-chevron-down"></i>
+        </button>
+    </div>
+    </div>
+    <div id="containerPreventivatore" class="container py-5" style="display: none;">
+        <h1 class="mb-4 text-center fw-bold">Preventivatore Traslochi</h1>
+        <form id="traslocoForm" autocomplete="off">
+            <!-- Step 1: Metri cubi -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">1</span>Quantità da trasportare (m³)</label>
+                <select class="form-select mt-2" name="metriCubi" id="metriCubi" required>
+                    <option value="">Seleziona...</option>
+                    <option value="0-10">0-10 m³</option>
+                    <option value="10-20">10-20 m³</option>
+                    <option value="20-30">20-30 m³</option>
+                    <option value="30-40">30-40 m³</option>
+                    <option value="40-50">40-50 m³</option>
+                    <option value="50-60">50-60 m³</option>
+                    <option value="60+">oltre 60 m³</option>
+                </select>
+            </div>
+            <!-- Step 2: Regione partenza -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">2</span>Regione di partenza</label>
+                <select class="form-select mt-2" name="regionePartenza" id="regionePartenza" required></select>
+            </div>
+            <!-- Step 3: Provincia partenza -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">3</span>Provincia di partenza</label>
+                <select class="form-select mt-2" name="provinciaPartenza" id="provinciaPartenza" required></select>
+            </div>
+            <!-- Step 4: Centro/Periferia partenza -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">4</span>Zona di partenza</label>
+                <select class="form-select mt-2" name="zonaPartenza" id="zonaPartenza" required>
+                    <option value="">Seleziona...</option>
+                    <option value="centro">Centro città </option>
+                    <option value="periferia">Periferia</option>
+                </select>
+            </div>
+            <!-- Step 5: Imballaggio -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">5</span>Imballaggio</label>
+                <select class="form-select mt-2" name="imballaggio" id="imballaggio" required>
+                    <option value="no">No</option>
+                    <option value="si">Sì</option>
+                </select>
+            </div>
+            <!-- Step 6: Servizi aggiuntivi -->
+            <div class="preventivatore-card" style="color: black;">
+                <label class="wizard-label"><span class="step-number">6</span>Servizi aggiuntivi</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="bancali" id="bancali">
+                    <label class="form-check-label" for="bancali">Bancali</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="arredo" id="arredo">
+                    <label class="form-check-label" for="arredo">Arredo </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="mobilio" id="mobilio">
+                    <label class="form-check-label" for="mobilio">Mobilio </label>
+                </div>
+            </div>
+            <!-- Step 7: Piano partenza -->
+            <div class="preventivatore-card" style="color: black;">
+                <label class="wizard-label"><span class="step-number">7</span>Piani partenza (selezione
+                    multipla)</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="terra" id="pianoTerraPartenza"
+                        name="pianoPartenza">
+                    <label class="form-check-label" for="pianoTerraPartenza">Piano terra </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="rialzato" id="pianoRialzatoPartenza"
+                        name="pianoPartenza">
+                    <label class="form-check-label" for="pianoRialzatoPartenza">Piano rialzato </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="seminterrato" id="pianoSeminterratoPartenza"
+                        name="pianoPartenza">
+                    <label class="form-check-label" for="pianoSeminterratoPartenza">Piano seminterrato</label>
+                </div>
+            </div>
+            <!-- Step 8: Regione destinazione -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">8</span>Regione destinazione</label>
+                <select class="form-select mt-2" name="regioneDestinazione" id="regioneDestinazione" required></select>
+            </div>
+            <!-- Step 9: Provincia destinazione -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">9</span>Provincia destinazione</label>
+                <select class="form-select mt-2" name="provinciaDestinazione" id="provinciaDestinazione"
+                    required></select>
+            </div>
+            <!-- Step 10: Zona destinazione -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">10</span>Zona di destinazione</label>
+                <select class="form-select mt-2" name="zonaDestinazione" id="zonaDestinazione" required>
+                    <option value="">Seleziona...</option>
+                    <option value="centro">Centro città</option>
+                    <option value="periferia">Periferia</option>
+                </select>
+            </div>
+            <!-- Step 11: Piano destinazione -->
+            <div class="preventivatore-card">
+                <label class="wizard-label"><span class="step-number">11</span>Piani destinazione (selezione
+                    multipla)</label>
+                <div class="form-check" style="color: black;">
+                    <input class="form-check-input" type="checkbox" value="terra" id="pianoTerraDestinazione"
+                        name="pianoDestinazione">
+                    <label class="form-check-label" for="pianoTerraDestinazione">Piano terra </label>
+                </div>
+                <div class="form-check" style="color: black;">
+                    <input class="form-check-input" type="checkbox" value="rialzato" id="pianoRialzatoDestinazione"
+                        name="pianoDestinazione">
+                    <label class="form-check-label" for="pianoRialzatoDestinazione">Piano rialzato </label>
+                </div>
+                <div class="form-check" style="color: black;">
+                    <input class="form-check-input" type="checkbox" value="seminterrato"
+                        id="pianoSeminterratoDestinazione" name="pianoDestinazione">
+                    <label class="form-check-label" for="pianoSeminterratoDestinazione">Piano seminterrato
+                    </label>
+                </div>
+            </div>
+            <!-- Bottone invia -->
+            <div class="text-center mb-5">
+                <button type="submit" class="btn btn-primary mt-3">INVIA</button>
+            </div>
+        </form>
+        <!-- Risultato preventivo e riepilogo (nascosto fino all'invio) -->
+        </form>
+        <div id="riepilogoPreventivo" class="result mt-4" style="display:none;"></div>
+    </div>
+    </div>
+    </div>
+
+    <script>
+        // Mostra il form al click e nasconde il bottone
+        const toggleBtn = document.getElementById('btnTogglePreventivatore');
+        const container = document.getElementById('containerPreventivatore');
+
+        toggleBtn.addEventListener('click', () => {
+            const isVisible = container.style.display === 'block';
+
+            if (isVisible) {
+                container.style.display = 'none';
+                toggleBtn.innerHTML = 'fai il tuo preventivo <i class="fa-sharp fa-solid fa-chevron-down"></i>';
+            } else {
+                container.classList.remove('fade-in'); // Reset
+                void container.offsetWidth; // Forza reflow per riattivare l'animazione
+                container.style.display = 'block';
+                container.classList.add('fade-in');
+                toggleBtn.innerHTML = 'Nascondi il preventivatore <i class="fa-sharp fa-solid fa-angle-up"></i>';
+            }
+        });
+    </script>
+
+    <section id="knowhow" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Il nostro know-how</h2>
+            <div class="timeline" id="timelineContainer"></div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Domande Frequenti</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse1" aria-expanded="true">
+                            Quali aree coprite?
+                        </button>
+                    </h2>
+                    <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Serviamo tutto il territorio nazionale </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse2">
+                            Avete polizze assicurative?
+                        </button>
+                    </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Sì, ogni trasloco è coperto da assicurazione all-risk inclusa.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer"></div>
+    </footer>
+
+    <footer class="py-4 bg-dark text-white text-center">
+        <div class="container">
+            <p class="mb-0">© Sai service 2025. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const timelineData = [
+                { year: '2013 - Fondazione', text: 'Inizio attività come ditta specializzata in traslochi residenziali.' },
+                { year: '2015 - Espansione', text: 'Apertura del servizio corporate e logistica integrata per PMI.' },
+                { year: '2018 - Innovazione Digitale', text: 'Lancio della piattaforma proprietaria per gestione in cloud e tracciabilità 24h.' },
+                { year: '2025 - Futuro', text: 'Ricerca su AI e automazione per una logistica sempre più efficiente.' }
+            ];
+
+            const container = document.getElementById('timelineContainer');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        timelineData.forEach((item, i) => {
+                            setTimeout(() => {
+                                const div = document.createElement('div');
+                                div.className = 'timeline-item animate__animated ' + (i % 2 === 0 ? 'animate__fadeInLeft' : 'animate__fadeInRight');
+                                div.innerHTML = `<h6 class="fw-bold">${item.year}</h6><p>${item.text}</p>`;
+                                container.appendChild(div);
+                            }, i * 300);
+                        });
+                        obs.unobserve(container);
+                    }
+                });
+            }, { threshold: 0.2 });
+            observer.observe(container);
+
+            // Selezione dinamica servizio
+            const dettagli = {
+                traslochi: `<h4>Traslochi Privati & Aziendali</h4><p>Offriamo un servizio di trasloco completo e personalizzato: sopralluoghi gratuiti, smontaggio e rimontaggio mobili, imballaggio professionale, trasporto con mezzi dedicati e copertura assicurativa totale. La nostra esperienza ci consente di operare sia in ambito residenziale che aziendale, garantendo efficienza e sicurezza.</p>`,
+                logistica: `<h4>Magazzinaggio & Logistica</h4><p>Disponiamo di magazzini attrezzati e sicuri per stoccaggi a breve e lungo termine. Offriamo soluzioni logistiche integrate, gestione inventari e tracciabilità digitale per aziende che necessitano supporto nel ciclo di distribuzione merci.</p>`,
+                supply: `<h4>Gestione Supply Chain</h4><p>Supportiamo le imprese nella pianificazione, esecuzione e ottimizzazione della supply chain grazie a strumenti digitali avanzati e un team di esperti. Il nostro obiettivo è migliorare l’efficienza, ridurre i costi e garantire trasparenza lungo tutta la filiera logistica.</p>`,
+            };
+
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const tipo = card.dataset.service;
+                    const box = document.getElementById('dettaglio-servizio');
+                    box.innerHTML = dettagli[tipo];
+                    box.style.display = 'block';
+                    box.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/0e6886c2-b323-4f60-804d-b0120f86efe2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/preventivatore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Lucide Icons -->
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="/navbar.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</body>
+</body>
+
+</html>
