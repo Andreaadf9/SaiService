@@ -3,8 +3,6 @@
     const footerHTML = document.querySelector(".footer");
     if (!footerHTML) return;
   
-    // ATTENZIONE: verifica il nome del logo nel repo; qui uso "LogominiSaiNs.png" 
-    // (se il tuo file si chiama LogominiSai.png modifica qui di conseguenza)
     footerHTML.innerHTML = `
     <div class="footer-section">
       <div class="container">
@@ -60,7 +58,7 @@
                 </div>
                 <ul style="list-style:none; padding-left:0; margin:0;">
                   <li><a href="index.html">Home</a></li>
-                  <li><a href="LavoraConNoi.html">Lavora Con Noi</a></li>
+                  <li><a href="lavoraConNoi.html">Lavora Con Noi</a></li>
                   <!-- ATTENZIONE: se la tua pagina è partner.html usa partner.html, se è partners.html usa quello -->
                   <li><a href="partner.html">Partners</a></li>
                 </ul>
