@@ -127,9 +127,13 @@
 
     updateThemeIcons();
 
-    // close offcanvas after clicking a link (mobile)
-    document.querySelectorAll('#offcanvasNavbar .nav-link, #offcanvasNavbar .dropdown-item').forEach(el => {
-      el.addEventListener('click', () => {
+    //Gestione offcanvas
+    document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+       
+        if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) {
+          return;
+        }
         const offEl = document.getElementById('offcanvasNavbar');
         if (offEl && typeof bootstrap !== 'undefined') {
           const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
@@ -137,5 +141,5 @@
         }
       });
     });
-  } // end initNavbar
+  } 
 })();

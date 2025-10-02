@@ -1,4 +1,4 @@
-// footer.js — versione corretta, usa percorsi RELATIVI e target="_blank" per esterni
+
 (function () {
     const footerHTML = document.querySelector(".footer");
     if (!footerHTML) return;
@@ -71,11 +71,11 @@
                   <h3>Seguici</h3>
                 </div>
                 <!-- Sostituisci gli href qui sotto con i link corretti dei tuoi profili -->
-                <a href="https://www.facebook.com/your-page" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f facebook-bg soc"></i></a>
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f facebook-bg soc"></i></a>
                 <a href="https://x.com/Move_Connect_" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter twitter-bg soc"></i></a>
-                <a href="https://www.instagram.com/your-instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram instagram-bg soc"></i></a>
-                <a href="https://www.tiktok.com/@your-tiktok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok tiktok-bg soc"></i></a>
-                <a href="https://www.youtube.com/@your-channel" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube youtube-bg soc"></i></a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram instagram-bg soc"></i></a>
+                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok tiktok-bg soc"></i></a>
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube youtube-bg soc"></i></a>
               </div>
             </div>
   

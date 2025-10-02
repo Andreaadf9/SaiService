@@ -107,9 +107,9 @@
 <body>
   <div class="navbarMain"></div>
 
-  <!-- HERO con canvas sfondo fluido animato -->
+  
   <section class="hero-facility position-relative overflow-hidden d-flex align-items-center justify-content-center">
-    <!-- Canvas Particelle -->
+   
     <canvas id="particlesBg" class="particles-bg-canvas position-absolute top-0 start-0 w-100 h-100"></canvas>
     <div class="container position-relative z-1 text-center py-5">
       <h1 class="display-4 fw-bold mb-3 text-white animate__animated animate__fadeInDown">
@@ -139,7 +139,7 @@
   </style>
   
   <script>
-    // Responsive particle network background (Blu/Azzurro/GrigioAzzurro)
+    // (Blu/Azzurro/GrigioAzzurro)
     function particleHeroBg() {
       const canvas = document.getElementById('particlesBg');
       if (!canvas) return;
@@ -158,10 +158,9 @@
       resize();
       window.addEventListener('resize', resize);
     
-      // Particles setup
+     
       const colors = ["#60aaff", "#257cc2", "#b2e6f7", "#b4c8d7"];
-      let N = Math.floor((width + height) / 24); // Responsive number of particles
-    
+      let N = Math.floor((width + height) / 24); 
       let particles = [];
       function initParticles() {
         N = Math.floor((canvas.offsetWidth + canvas.offsetHeight) / 24);
@@ -180,7 +179,7 @@
       initParticles();
       window.addEventListener('resize', initParticles);
     
-      // Mouse interaction
+    
       let mouse = {x: null, y: null, radius: 120};
       canvas.addEventListener('mousemove', e => {
         const rect = canvas.getBoundingClientRect();
@@ -189,19 +188,17 @@
       });
       canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
     
-      // Animate
+     
       function animate() {
         ctx.clearRect(0, 0, width, height);
-        // Move and draw particles
+   
         for (let p of particles) {
           p.x += p.dx;
           p.y += p.dy;
-    
-          // Bounce on borders
           if (p.x < 0 || p.x > width) p.dx *= -1;
           if (p.y < 0 || p.y > height) p.dy *= -1;
     
-          // Draw
+          
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
           ctx.fillStyle = p.c + "cc";
@@ -211,7 +208,7 @@
           ctx.shadowBlur = 0;
         }
     
-        // Lines between close particles
+        
         for (let i = 0; i < N; i++) {
           for (let j = i + 1; j < N; j++) {
             let a = particles[i], b = particles[j];
@@ -229,7 +226,7 @@
           }
         }
     
-        // Particles and lines to mouse
+        
         if (mouse.x !== null && mouse.y !== null) {
           for (let p of particles) {
             let dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
@@ -253,7 +250,7 @@
     particleHeroBg();
     </script>
 
-  <!-- COS'È IL FACILITY MANAGEMENT -->
+  
   <section class="py-5">
     <div class="container bg-light-blur p-4 p-md-5">
       <h2 class="section-title text-center mb-3"><i class="fa-solid fa-building me-2"></i>Gestione Integrata, Zero Stress</h2>
@@ -281,7 +278,7 @@
 
   <hr class="divider">
 
-  <!-- METODOLOGIA -->
+ 
   <section class="py-5">
     <div class="container">
       <h2 class="section-title text-center mb-3"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Come Svolgiamo il Nostro Lavoro</h2>
@@ -308,7 +305,7 @@
 
   <hr class="divider">
 
-  <!-- PUNTI DI FORZA -->
+  
   <section class="py-5 bg-white" style="color: black;">
     <div class="container">
       <h2 class="section-title text-center mb-3"><i class="fa-solid fa-bolt me-2"></i>Punti di Forza: Oltre il Trasloco</h2>
@@ -359,7 +356,7 @@
 
   <hr class="divider">
 
-  <!-- FACILITY MANAGEMENT EVOLUTO -->
+ 
   <section class="py-5">
     <div class="container bg-light-blur p-4 p-md-5" style="color: black;">
       <h2 class="section-title text-center mb-3"><i class="fa-solid fa-rocket me-2"></i>Facility Management come non l’avete mai visto</h2>
@@ -389,7 +386,7 @@
 
   <hr class="divider">
 
-  <!-- SICUREZZA, CONTROLLO, INNOVAZIONE -->
+  
   <section class="py-5">
     <div class="container">
       <div class="row align-items-center g-5">
