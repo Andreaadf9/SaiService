@@ -298,7 +298,7 @@ const regioni = [
         // Calcola posizione X centrale
         const centerLinkX = (pageWidth - textWidth) / 2;
         
-        // Usa textWithLink con la X centrata!
+        // Usa textWithLink 
         pdf.textWithLink(linkLabel, centerLinkX, y+8.5, {
           url: "mailto:info@saitraslochi.it?subject=Richiesta Preventivo&body=In allegato il preventivo generato dal sito"
         });

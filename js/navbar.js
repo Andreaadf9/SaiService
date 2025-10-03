@@ -102,7 +102,6 @@
 </nav>
     `;
 
-    // render lucide icons
     lucide.createIcons();
 
     // theme toggles

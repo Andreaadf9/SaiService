@@ -85,13 +85,12 @@
 
     let raf = null;
     function loop(){
-      // if hero resized (e.g. mobile -> desktop) re-init radii
+   
       draw();
       raf = requestAnimationFrame(loop);
     }
     loop();
 
-    // re-init on resize to recalc radii
     window.addEventListener('resize', () => {
       resize();
       init();
@@ -100,9 +99,9 @@
 
   
   window.emailjsConfig = {
-    userID: 'qWEF6KTz-fd6KKBNF',// chiave pubblica
-    serviceID: 'service_pbt1ma6',// serv.id
-    templateID: 'template_4dzzb7p'// Templ.id
+    userID: 'qWEF6KTz-fd6KKBNF',// cp
+    serviceID: 'service_pbt1ma6',
+    templateID: 'template_4dzzb7p'
   };
   (function(){
     const form = document.getElementById('applyForm');
