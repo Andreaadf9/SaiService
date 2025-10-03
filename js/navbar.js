@@ -103,7 +103,10 @@
     `;
 
     lucide.createIcons();
-
+    const dropdownTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="dropdown"]'));
+    dropdownTriggerList.map(function (dropdownToggleEl) {
+      return new bootstrap.Dropdown(dropdownToggleEl);
+    });
     // theme toggles
     const themeToggles = document.querySelectorAll('.themeToggle');
 
