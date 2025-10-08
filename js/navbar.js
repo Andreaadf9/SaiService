@@ -1,4 +1,3 @@
-// navbar.js (versione corretta)
 (function () {
   const navbarHTML = document.querySelector(".navbarMain");
 
@@ -104,7 +103,6 @@
 
     try { lucide.createIcons(); } catch(e){ console.warn('lucide.createIcons error', e); }
 
-    // quick style guard: z-index per dropdown (evita overlay)
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
@@ -115,7 +113,6 @@
       document.head.appendChild(style);
     }
 
-    // Convert old data-toggle attributes (compat) — safe to run anytime
     function convertDataToggle() {
       document.querySelectorAll('[data-toggle]').forEach(el => {
         if (!el.hasAttribute('data-bs-toggle')) el.setAttribute('data-bs-toggle', el.getAttribute('data-toggle'));
@@ -123,12 +120,11 @@
       });
     }
 
-    // ---------- fallback (delegated) handler (used only if bootstrap not found) ----------
     let fallbackAttached = false;
     function fallbackHandler(e) {
       const toggle = e.target.closest('.dropdown-toggle');
       if (!toggle) return;
-      // if bootstrap exists, prefer it
+
       if (typeof bootstrap !== 'undefined') return;
 
       e.preventDefault();
@@ -137,7 +133,7 @@
       const menu = dropdown.querySelector('.dropdown-menu');
       const isShown = dropdown.classList.contains('show');
 
-      // close other open dropdowns
+
       document.querySelectorAll('.dropdown.show').forEach(d => {
         if (d !== dropdown) {
           d.classList.remove('show');
@@ -171,7 +167,6 @@
       console.warn('SAI: dropdown fallback detached (bootstrap available).');
     }
 
-    // ---------- init bootstrap dropdowns (safe) ----------
     function initBootstrapDropdowns() {
       if (typeof bootstrap === 'undefined') return false;
       try {
@@ -191,7 +186,6 @@
       }
     }
 
-    // retry mechanism: prova per un breve periodo, poi attacca fallback se bootstrap non appare
     let attempts = 0;
     const maxAttempts = 20; // 20 * 200ms = 4s max wait
     const tryInterval = 200;
@@ -207,14 +201,12 @@
       }
     }, tryInterval);
 
-    // osservatore per reinizializzare se la navbar viene modificata dinamicamente in seguito
     const mo = new MutationObserver(() => {
-      // piccolo delay
+ 
       setTimeout(() => { initBootstrapDropdowns(); }, 50);
     });
     mo.observe(navbarHTML, { childList: true, subtree: true });
 
-    // Theme toggles (come prima)
     const themeToggles = document.querySelectorAll('.themeToggle');
 
     function updateThemeIcons() {
@@ -236,7 +228,6 @@
 
     updateThemeIcons();
 
-    // Gestione offcanvas (chiusura quando clicchi link non dropdown)
     document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) {
@@ -248,12 +239,12 @@
             const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
             inst.hide();
           } catch (e) {
-            // fallback: proviamo a rimuovere classi se necessario
+  
             offEl.classList.remove('show');
           }
         }
       });
     });
 
-  } // end initNavbar
+  } 
 })();
