@@ -10,12 +10,100 @@
   function initNavbar() {
     if (!navbarHTML) return;
 
-    navbarHTML.innerHTML = `...` // <-- lascia invariato il tuo HTML attuale della navbar qui (non modificarlo)
+    navbarHTML.innerHTML = `
+<nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
+     style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">
+  <div class="container-fluid">
+    <a class="navbar-brand text-dark d-flex align-items-center" href="index.html">
+      <img src="img/LogominiSaiNs.png" alt="Logo" class="img-fluid me-2" style="height: 60px;">
+    </a>
 
-    // --- lucide icons ---
+    <button class="btn rounded-circle p-2 border-0 d-xxl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="background-color: rgba(255,255,255,0.3);">
+      <i data-lucide="menu" class="text-white"></i>
+    </button>
+
+    <ul class="navbar-nav ms-auto align-items-center gap-3 d-none d-xxl-flex">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+          <i data-lucide="briefcase" class="me-1"></i> Azienda
+        </a>
+        <ul class="dropdown-menu animate__animated animate__fadeIn">
+          <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
+          <li><a class="dropdown-item" href="index.html#certificazioni">Certificazioni</a></li>
+          <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+          <i data-lucide="truck" class="me-1"></i> Servizi
+        </a>
+        <ul class="dropdown-menu animate__animated animate__fadeIn">
+          <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
+          <li><a class="dropdown-item" href="library.html">Library</a></li>
+          <li><a class="dropdown-item" href="pulizie.html">Pulizie civili & Industriali</a></li>
+          <li><a class="dropdown-item" href="facility.html">Facility Management</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item"><a class="nav-link" href="partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
+      <li class="nav-item"><a class="nav-link" href="profilo.html">Chi Siamo</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#btnContatti">Contatti</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li class="nav-item">
+        <button class="themeToggle btn btn-sm text-white me-3 rounded-circle p-2" style="background-color: rgba(255,255,255,0.3);">
+          <i data-lucide="sun"></i>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Offcanvas mobile -->
+    <div class="offcanvas offcanvas-start text-bg-dark animated-slide d-xxl-none" tabindex="-1" id="offcanvasNavbar" style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif;">
+      <div class="offcanvas-header border-bottom border-light">
+        <h5 class="offcanvas-title">
+          <img src="img/LogominiSaiNs.png" alt="Logo" style="height: 60px;">
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column justify-content-center align-items-center gap-3">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Azienda</a>
+            <ul class="dropdown-menu animate__animated animate__fadeIn">
+              <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
+              <li><a class="dropdown-item" href="index.html#certificazioni">Certificazioni</a></li>
+              <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Servizi</a>
+            <ul class="dropdown-menu animate__animated animate__fadeIn">
+              <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
+              <li><a class="dropdown-item" href="library.html">Library</a></li>
+              <li><a class="dropdown-item" href="pulizie.html">Pulizie</a></li>
+              <li><a class="dropdown-item" href="facility.html">Facility</a></li>
+            </ul>
+          </li>
+
+          <li><a class="nav-link text-white" href="partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
+          <li><a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li class="nav-item mt-2">
+            <button class="themeToggle btn btn-sm text-white me-3 rounded-circle p-2" style="background-color: rgba(255,255,255,0.3);">
+              <i data-lucide="sun"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+    `;
+
+    // === ICONS ===
     try { lucide.createIcons(); } catch (e) { console.warn('lucide.createIcons error', e); }
 
-    // --- style fix ---
+    // === STYLE FIX ===
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
@@ -23,12 +111,12 @@
       document.head.appendChild(style);
     }
 
-    // --- EVENT DELEGATION per dropdown (robusto e cross-page) ---
+    // === EVENT DELEGATION for dropdowns ===
     document.addEventListener('click', function (e) {
       const toggle = e.target.closest('.dropdown-toggle');
       if (!toggle) return;
 
-      // Se Bootstrap è disponibile, lasciamo fare a lui
+      // Se Bootstrap è disponibile, lascia che gestisca lui il dropdown
       if (typeof bootstrap !== 'undefined') return;
 
       e.preventDefault();
@@ -57,14 +145,14 @@
       }
     });
 
-    // --- Inizializza Bootstrap se presente ---
+    // === Bootstrap init se presente ===
     if (typeof bootstrap !== 'undefined') {
       document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
         bootstrap.Dropdown.getOrCreateInstance(el);
       });
     }
 
-    // --- Observer: se la navbar viene aggiornata, reapplica init bootstrap ---
+    // === Observer per reinizializzare se la navbar cambia ===
     const mo = new MutationObserver(() => {
       if (typeof bootstrap !== 'undefined') {
         document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
@@ -96,7 +184,7 @@
 
     updateThemeIcons();
 
-    // --- Offcanvas close on click ---
+    // === Offcanvas close on link click ===
     document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) return;
