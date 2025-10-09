@@ -1,139 +1,42 @@
 (function () {
   const navbarHTML = document.querySelector(".navbarMain");
 
+  // === THEME HANDLING ===
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-  }
+  if (savedTheme === 'dark') document.body.classList.add('dark-theme');
 
   initNavbar();
 
   function initNavbar() {
     if (!navbarHTML) return;
 
-    navbarHTML.innerHTML = `
-<nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
-     style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">
-  <div class="container-fluid">
-    <a class="navbar-brand text-dark d-flex align-items-center" href="index.html">
-      <img src="img/LogominiSaiNs.png" alt="Logo" class="img-fluid me-2" style="height: 60px;">
-    </a>
+    navbarHTML.innerHTML = `...` // <-- lascia invariato il tuo HTML attuale della navbar qui (non modificarlo)
 
-    <button class="btn rounded-circle p-2 border-0 d-xxl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" style="background-color: rgba(255,255,255,0.3);">
-      <i data-lucide="menu" class="text-white"></i>
-    </button>
+    // --- lucide icons ---
+    try { lucide.createIcons(); } catch (e) { console.warn('lucide.createIcons error', e); }
 
-    <ul class="navbar-nav ms-auto align-items-center gap-3 d-none d-xxl-flex">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-          <i data-lucide="briefcase" class="me-1"></i> Azienda
-        </a>
-        <ul class="dropdown-menu animate__animated animate__fadeIn">
-          <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
-          <li><a class="dropdown-item" href="index.html#certificazioni">Certificazioni</a></li>
-          <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
-        </ul>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-          <i data-lucide="truck" class="me-1"></i> Servizi
-        </a>
-        <ul class="dropdown-menu animate__animated animate__fadeIn">
-          <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
-          <li><a class="dropdown-item" href="library.html">Library</a></li>
-          <li><a class="dropdown-item" href="pulizie.html">Pulizie civili & Industriali</a></li>
-          <li><a class="dropdown-item" href="facility.html">Facility Management</a></li>
-        </ul>
-      </li>
-
-      <li class="nav-item"><a class="nav-link" href="partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
-      <li class="nav-item"><a class="nav-link" href="profilo.html">Chi Siamo</a></li>
-      <li class="nav-item"><a class="nav-link" href="index.html#btnContatti">Contatti</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-      <li class="nav-item">
-        <button class="themeToggle btn btn-sm text-white me-3 rounded-circle p-2" style="background-color: rgba(255,255,255,0.3);">
-          <i data-lucide="sun"></i>
-        </button>
-      </li>
-    </ul>
-
-    <!-- Offcanvas mobile -->
-    <div class="offcanvas offcanvas-start text-bg-dark animated-slide d-xxl-none" tabindex="-1" id="offcanvasNavbar" style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif;">
-      <div class="offcanvas-header border-bottom border-light">
-        <h5 class="offcanvas-title">
-          <img src="img/LogominiSaiNs.png" alt="Logo" style="height: 60px;">
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body d-flex flex-column justify-content-center align-items-center gap-3">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Azienda</a>
-            <ul class="dropdown-menu animate__animated animate__fadeIn">
-              <li><a class="dropdown-item" href="profilo.html">Profilo</a></li>
-              <li><a class="dropdown-item" href="index.html#certificazioni">Certificazioni</a></li>
-              <li><a class="dropdown-item" href="profilo.html#storia">Storia</a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">Servizi</a>
-            <ul class="dropdown-menu animate__animated animate__fadeIn">
-              <li><a class="dropdown-item" href="logisticaTraslochi.html">Logistica & Traslochi</a></li>
-              <li><a class="dropdown-item" href="library.html">Library</a></li>
-              <li><a class="dropdown-item" href="pulizie.html">Pulizie</a></li>
-              <li><a class="dropdown-item" href="facility.html">Facility</a></li>
-            </ul>
-          </li>
-
-          <li><a class="nav-link text-white" href="partner.html"><i data-lucide="users" class="me-1"></i> Partners</a></li>
-          <li><a class="nav-link text-white" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-          <li class="nav-item mt-2">
-            <button class="themeToggle btn btn-sm text-white me-3 rounded-circle p-2" style="background-color: rgba(255,255,255,0.3);">
-              <i data-lucide="sun"></i>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-    `;
-
-    try { lucide.createIcons(); } catch(e){ console.warn('lucide.createIcons error', e); }
-
+    // --- style fix ---
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
-      style.innerHTML = `
-        .dropdown-menu{ z-index: 20000 !important; }
-        .dropdown{ position: relative; }
-      `;
+      style.innerHTML = `.dropdown-menu{ z-index:20000!important; } .dropdown{ position:relative; }`;
       document.head.appendChild(style);
     }
 
-    function convertDataToggle() {
-      document.querySelectorAll('[data-toggle]').forEach(el => {
-        if (!el.hasAttribute('data-bs-toggle')) el.setAttribute('data-bs-toggle', el.getAttribute('data-toggle'));
-        el.removeAttribute('data-toggle');
-      });
-    }
-
-    let fallbackAttached = false;
-    function fallbackHandler(e) {
+    // --- EVENT DELEGATION per dropdown (robusto e cross-page) ---
+    document.addEventListener('click', function (e) {
       const toggle = e.target.closest('.dropdown-toggle');
       if (!toggle) return;
 
+      // Se Bootstrap è disponibile, lasciamo fare a lui
       if (typeof bootstrap !== 'undefined') return;
 
       e.preventDefault();
       const dropdown = toggle.closest('.dropdown');
-      if (!dropdown) return;
-      const menu = dropdown.querySelector('.dropdown-menu');
-      const isShown = dropdown.classList.contains('show');
+      const menu = dropdown?.querySelector('.dropdown-menu');
+      const isShown = dropdown?.classList.contains('show');
 
-
+      // Chiudi eventuali altri dropdown aperti
       document.querySelectorAll('.dropdown.show').forEach(d => {
         if (d !== dropdown) {
           d.classList.remove('show');
@@ -142,6 +45,7 @@
         }
       });
 
+      // Toggle dropdown corrente
       if (!isShown) {
         dropdown.classList.add('show');
         menu?.classList.add('show');
@@ -151,62 +55,26 @@
         menu?.classList.remove('show');
         toggle.setAttribute('aria-expanded', 'false');
       }
-    }
-    function attachFallback() {
-      if (fallbackAttached) return;
-      document.addEventListener('click', fallbackHandler);
-      document.addEventListener('touchstart', fallbackHandler);
-      fallbackAttached = true;
-      console.warn('SAI: dropdown fallback attached (bootstrap not available).');
-    }
-    function detachFallback() {
-      if (!fallbackAttached) return;
-      document.removeEventListener('click', fallbackHandler);
-      document.removeEventListener('touchstart', fallbackHandler);
-      fallbackAttached = false;
-      console.warn('SAI: dropdown fallback detached (bootstrap available).');
+    });
+
+    // --- Inizializza Bootstrap se presente ---
+    if (typeof bootstrap !== 'undefined') {
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+        bootstrap.Dropdown.getOrCreateInstance(el);
+      });
     }
 
-    function initBootstrapDropdowns() {
-      if (typeof bootstrap === 'undefined') return false;
-      try {
-        convertDataToggle();
-        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-          try {
-            bootstrap.Dropdown.getOrCreateInstance(el);
-          } catch (e) {
-            console.warn('SAI: error init dropdown instance', e);
-          }
-        });
-        detachFallback();
-        return true;
-      } catch (err) {
-        console.warn('SAI: initBootstrapDropdowns unexpected error', err);
-        return false;
-      }
-    }
-
-    let attempts = 0;
-    const maxAttempts = 20; // 20 * 200ms = 4s max wait
-    const tryInterval = 200;
-    const checker = setInterval(() => {
-      attempts++;
-      if (initBootstrapDropdowns()) {
-        clearInterval(checker);
-        return;
-      }
-      if (attempts >= maxAttempts) {
-        clearInterval(checker);
-        attachFallback();
-      }
-    }, tryInterval);
-
+    // --- Observer: se la navbar viene aggiornata, reapplica init bootstrap ---
     const mo = new MutationObserver(() => {
- 
-      setTimeout(() => { initBootstrapDropdowns(); }, 50);
+      if (typeof bootstrap !== 'undefined') {
+        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+          bootstrap.Dropdown.getOrCreateInstance(el);
+        });
+      }
     });
     mo.observe(navbarHTML, { childList: true, subtree: true });
 
+    // === THEME TOGGLE ===
     const themeToggles = document.querySelectorAll('.themeToggle');
 
     function updateThemeIcons() {
@@ -214,7 +82,7 @@
       themeToggles.forEach(btn => {
         btn.innerHTML = `<i data-lucide="${isDark ? 'moon' : 'sun'}"></i>`;
       });
-      try { lucide.createIcons(); } catch(e) {}
+      try { lucide.createIcons(); } catch (e) { }
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
@@ -228,23 +96,23 @@
 
     updateThemeIcons();
 
+    // --- Offcanvas close on click ---
     document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
-        if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) {
-          return;
-        }
+        if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) return;
+
         const offEl = document.getElementById('offcanvasNavbar');
-        if (offEl && typeof bootstrap !== 'undefined') {
+        if (!offEl) return;
+
+        if (typeof bootstrap !== 'undefined') {
           try {
             const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
             inst.hide();
           } catch (e) {
-  
             offEl.classList.remove('show');
           }
         }
       });
     });
-
-  } 
+  }
 })();
