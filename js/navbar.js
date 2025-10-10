@@ -10,6 +10,7 @@
   function initNavbar() {
     if (!navbarHTML) return;
 
+    // === MARKUP (tua navbar originale) ===
     navbarHTML.innerHTML = `
 <nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
      style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">
@@ -103,61 +104,130 @@
     // === ICONS ===
     try { lucide.createIcons(); } catch (e) { console.warn('lucide.createIcons error', e); }
 
-    // === STYLE FIX ===
+    // === STYLE FIX (importante: forziamo show) ===
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
-      style.innerHTML = `.dropdown-menu{ z-index:20000!important; } .dropdown{ position:relative; }`;
+      style.innerHTML = `
+        .dropdown-menu{ z-index:20000!important; }
+        .dropdown{ position:relative; }
+        /* forza visibilità quando 'show' è attivo, sovrascrivendo eventuali regole ostili */
+        .dropdown-menu.show,
+        .dropdown.show > .dropdown-menu {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      `;
       document.head.appendChild(style);
     }
 
-    // === EVENT DELEGATION for dropdowns ===
+    // --- helper per Bootstrap instance safe-creation ---
+    function ensureBootstrapInstance(toggle) {
+      if (typeof bootstrap === 'undefined' || !toggle) return false;
+      try {
+        let inst = bootstrap.Dropdown.getInstance(toggle);
+        if (!inst) inst = bootstrap.Dropdown.getOrCreateInstance(toggle);
+        return !!inst;
+      } catch (err) {
+        console.warn('SAI: ensureBootstrapInstance error', err);
+        return false;
+      }
+    }
+
+    // --- Pointerdown (capture) : crea le istanze bootstrap PRIMA del click ---
+    document.addEventListener('pointerdown', function (e) {
+      try {
+        const toggle = e.target.closest('.dropdown-toggle');
+        if (!toggle) return;
+        if (typeof bootstrap !== 'undefined') {
+          ensureBootstrapInstance(toggle);
+        }
+      } catch (err) { /* ignore */ }
+    }, true); // capture = true
+
+    // === EVENT DELEGATION con fallback intelligente ===
     document.addEventListener('click', function (e) {
       const toggle = e.target.closest('.dropdown-toggle');
       if (!toggle) return;
-
-      // Se Bootstrap è disponibile, lascia che gestisca lui il dropdown
-      if (typeof bootstrap !== 'undefined') return;
-
-      e.preventDefault();
       const dropdown = toggle.closest('.dropdown');
       const menu = dropdown?.querySelector('.dropdown-menu');
-      const isShown = dropdown?.classList.contains('show');
 
-      // Chiudi eventuali altri dropdown aperti
-      document.querySelectorAll('.dropdown.show').forEach(d => {
-        if (d !== dropdown) {
+      // fallback function (usa e.preventDefault() qui)
+      const doFallback = () => {
+        try { e.preventDefault(); } catch (ignore) {}
+        // chiudi altri aperti
+        document.querySelectorAll('.dropdown.show').forEach(d => {
+          if (d !== dropdown) {
+            d.classList.remove('show');
+            d.querySelector('.dropdown-menu')?.classList.remove('show');
+            d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        const isShown = dropdown?.classList.contains('show');
+        if (!isShown) {
+          dropdown.classList.add('show');
+          if (menu) {
+            menu.classList.add('show');
+            // rimuoviamo eventuale display:none inline lasciato da altri
+            menu.style.display = 'block';
+          }
+          toggle.setAttribute('aria-expanded', 'true');
+        } else {
+          dropdown.classList.remove('show');
+          menu?.classList.remove('show');
+          // rimuoviamo lo stile inline che abbiamo messo
+          if (menu) menu.style.display = '';
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      };
+
+      // Se Bootstrap è presente, prova prima con lui; se dopo breve non apre, applica fallback
+      if (typeof bootstrap !== 'undefined') {
+        try {
+          // crea/ottieni istanza (per essere sicuri)
+          ensureBootstrapInstance(toggle);
+          // lascia che bootstrap provi ad aprire — poi verifichiamo
+          setTimeout(() => {
+            const opened = dropdown.classList.contains('show');
+            if (!opened) {
+              // bootstrap non ha aperto -> fallback manuale
+              doFallback();
+            }
+          }, 80); // 80ms è sufficiente nella maggior parte dei casi
+          return;
+        } catch (err) {
+          console.warn('SAI: bootstrap toggle error, user fallback', err);
+          // caduta nel fallback sottostante
+        }
+      }
+
+      // Se Bootstrap non c'è, esegui fallback immediato
+      doFallback();
+    });
+
+    // --- Esc per chiudere dropdown aperti ---
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.dropdown.show').forEach(d => {
           d.classList.remove('show');
           d.querySelector('.dropdown-menu')?.classList.remove('show');
           d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // Toggle dropdown corrente
-      if (!isShown) {
-        dropdown.classList.add('show');
-        menu?.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
-      } else {
-        dropdown.classList.remove('show');
-        menu?.classList.remove('show');
-        toggle.setAttribute('aria-expanded', 'false');
+        });
       }
     });
 
-    // === Bootstrap init se presente ===
-    if (typeof bootstrap !== 'undefined') {
-      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-        bootstrap.Dropdown.getOrCreateInstance(el);
-      });
-    }
-
-    // === Observer per reinizializzare se la navbar cambia ===
+    // === Observer per reinizializzare se la navbar cambia (reinit bootstrap instances) ===
     const mo = new MutationObserver(() => {
       if (typeof bootstrap !== 'undefined') {
-        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-          bootstrap.Dropdown.getOrCreateInstance(el);
-        });
+        try {
+          document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+            bootstrap.Dropdown.getOrCreateInstance(el);
+          });
+        } catch (err) {
+          console.warn('SAI: MutationObserver reinit error', err);
+        }
       }
     });
     mo.observe(navbarHTML, { childList: true, subtree: true });
@@ -188,10 +258,8 @@
     document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) return;
-
         const offEl = document.getElementById('offcanvasNavbar');
         if (!offEl) return;
-
         if (typeof bootstrap !== 'undefined') {
           try {
             const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
@@ -202,5 +270,6 @@
         }
       });
     });
-  }
+
+  } // end initNavbar
 })();
