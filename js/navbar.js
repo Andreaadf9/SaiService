@@ -1,8 +1,6 @@
 (function () {
-  if (window.__sai_nav_inited) return;
-  window.__sai_nav_inited = true;
-
   const navbarHTML = document.querySelector(".navbarMain");
+
 
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') document.body.classList.add('dark-theme');
@@ -110,6 +108,7 @@
       style.innerHTML = `
         .dropdown-menu{ z-index:20000!important; }
         .dropdown{ position:relative; }
+        /* forza visibilità quando 'show' è attivo, sovrascrivendo eventuali regole ostili */
         .dropdown-menu.show,
         .dropdown.show > .dropdown-menu {
           display: block !important;
@@ -133,88 +132,76 @@
       }
     }
 
+
     document.addEventListener('pointerdown', function (e) {
       try {
         const toggle = e.target.closest('.dropdown-toggle');
         if (!toggle) return;
-        if (typeof bootstrap !== 'undefined') ensureBootstrapInstance(toggle);
-      } catch (err) {}
-    }, true);
-    if (typeof bootstrap !== 'undefined') {
-      document.addEventListener('shown.bs.dropdown', function (ev) {
-        const toggle = ev.target;
-        const opened = toggle?.closest('.dropdown');
-        if (!opened) return;
-        document.querySelectorAll('.dropdown.show').forEach(d => {
-          if (d === opened) return;
-          const otherToggle = d.querySelector('.dropdown-toggle');
-          if (otherToggle) {
-            try {
-              const otherInst = bootstrap.Dropdown.getInstance(otherToggle);
-              if (otherInst) {
-                otherInst.hide();
-              } else {
-                d.classList.remove('show');
-                d.querySelector('.dropdown-menu')?.classList.remove('show');
-                otherToggle.setAttribute('aria-expanded', 'false');
-              }
-            } catch (err) {
-              d.classList.remove('show');
-              d.querySelector('.dropdown-menu')?.classList.remove('show');
-              otherToggle.setAttribute('aria-expanded', 'false');
-            }
-          }
-        });
-      }, false);
-    }
+        if (typeof bootstrap !== 'undefined') {
+          ensureBootstrapInstance(toggle);
+        }
+      } catch (err) { /* ignora */ }
+    }, true); 
 
+  
     document.addEventListener('click', function (e) {
       const toggle = e.target.closest('.dropdown-toggle');
       if (!toggle) return;
+      const dropdown = toggle.closest('.dropdown');
+      const menu = dropdown?.querySelector('.dropdown-menu');
+
+      const doFallback = () => {
+        try { e.preventDefault(); } catch (ignore) {}
+        document.querySelectorAll('.dropdown.show').forEach(d => {
+          if (d !== dropdown) {
+            d.classList.remove('show');
+            d.querySelector('.dropdown-menu')?.classList.remove('show');
+            d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        const isShown = dropdown?.classList.contains('show');
+        if (!isShown) {
+          dropdown.classList.add('show');
+          if (menu) {
+            menu.classList.add('show');
+            menu.style.display = 'block';
+          }
+          toggle.setAttribute('aria-expanded', 'true');
+        } else {
+          dropdown.classList.remove('show');
+          menu?.classList.remove('show');
+          if (menu) menu.style.display = '';
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      };
 
       if (typeof bootstrap !== 'undefined') {
-        return;
-      }
+        try {
+          ensureBootstrapInstance(toggle);
 
-      e.preventDefault();
-      const dropdown = toggle.closest('.dropdown');
-      if (!dropdown) return;
-      const menu = dropdown.querySelector('.dropdown-menu');
+          setTimeout(() => {
+            const opened = dropdown.classList.contains('show');
+            if (!opened) {
 
-      document.querySelectorAll('.dropdown.show').forEach(d => {
-        if (d !== dropdown) {
-          d.classList.remove('show');
-          d.querySelector('.dropdown-menu')?.classList.remove('show');
-          d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+              doFallback();
+            }
+          }, 80); 
+          return;
+        } catch (err) {
+          console.warn('SAI: bootstrap toggle error, user fallback', err);
+
         }
-      });
-
-      const isShown = dropdown.classList.contains('show');
-      if (!isShown) {
-        dropdown.classList.add('show');
-        if (menu) menu.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
-      } else {
-        dropdown.classList.remove('show');
-        if (menu) menu.classList.remove('show');
-        toggle.setAttribute('aria-expanded', 'false');
       }
+
+      doFallback();
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         document.querySelectorAll('.dropdown.show').forEach(d => {
-          const t = d.querySelector('.dropdown-toggle');
           d.classList.remove('show');
           d.querySelector('.dropdown-menu')?.classList.remove('show');
-          if (t) t.setAttribute('aria-expanded', 'false');
-
-          if (typeof bootstrap !== 'undefined' && t) {
-            try {
-              const inst = bootstrap.Dropdown.getInstance(t);
-              if (inst) inst.hide();
-            } catch (err) {}
-          }
+          d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
         });
       }
     });
@@ -225,20 +212,24 @@
           document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
             bootstrap.Dropdown.getOrCreateInstance(el);
           });
-        } catch (err) {}
+        } catch (err) {
+          console.warn('SAI: MutationObserver reinit error', err);
+        }
       }
     });
     mo.observe(navbarHTML, { childList: true, subtree: true });
 
     const themeToggles = document.querySelectorAll('.themeToggle');
+
     function updateThemeIcons() {
       const isDark = document.body.classList.contains('dark-theme');
       themeToggles.forEach(btn => {
         btn.innerHTML = `<i data-lucide="${isDark ? 'moon' : 'sun'}"></i>`;
       });
-      try { lucide.createIcons(); } catch (e) {}
+      try { lucide.createIcons(); } catch (e) { }
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
+
     themeToggles.forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme');
@@ -246,6 +237,7 @@
         updateThemeIcons();
       });
     });
+
     updateThemeIcons();
     document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
