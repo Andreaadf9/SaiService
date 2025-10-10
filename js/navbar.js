@@ -1,7 +1,6 @@
 (function () {
   const navbarHTML = document.querySelector(".navbarMain");
 
-  // === THEME HANDLING ===
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') document.body.classList.add('dark-theme');
 
@@ -9,8 +8,6 @@
 
   function initNavbar() {
     if (!navbarHTML) return;
-
-    // === MARKUP (tua navbar originale) ===
     navbarHTML.innerHTML = `
 <nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
      style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">
@@ -101,138 +98,43 @@
 </nav>
     `;
 
-    // === ICONS ===
-    try { lucide.createIcons(); } catch (e) { console.warn('lucide.createIcons error', e); }
+    try { lucide.createIcons(); } catch(e){ console.warn('lucide.createIcons error', e); }
 
-    // === STYLE FIX (importante: forziamo show) ===
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
-      style.innerHTML = `
-        .dropdown-menu{ z-index:20000!important; }
-        .dropdown{ position:relative; }
-        /* forza visibilità quando 'show' è attivo, sovrascrivendo eventuali regole ostili */
-        .dropdown-menu.show,
-        .dropdown.show > .dropdown-menu {
-          display: block !important;
-          visibility: visible !important;
-          opacity: 1 !important;
-          transform: none !important;
-        }
-      `;
+      style.innerHTML = `.dropdown-menu{ z-index: 20000 !important; } .dropdown{ position: relative; }`;
       document.head.appendChild(style);
     }
+    function initDropdowns() {
+      if (typeof bootstrap === 'undefined') return;
 
-    // --- helper per Bootstrap instance safe-creation ---
-    function ensureBootstrapInstance(toggle) {
-      if (typeof bootstrap === 'undefined' || !toggle) return false;
-      try {
-        let inst = bootstrap.Dropdown.getInstance(toggle);
-        if (!inst) inst = bootstrap.Dropdown.getOrCreateInstance(toggle);
-        return !!inst;
-      } catch (err) {
-        console.warn('SAI: ensureBootstrapInstance error', err);
-        return false;
-      }
-    }
+      document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        const instance = bootstrap.Dropdown.getOrCreateInstance(toggle);
 
-    // --- Pointerdown (capture) : crea le istanze bootstrap PRIMA del click ---
-    document.addEventListener('pointerdown', function (e) {
-      try {
-        const toggle = e.target.closest('.dropdown-toggle');
-        if (!toggle) return;
-        if (typeof bootstrap !== 'undefined') {
-          ensureBootstrapInstance(toggle);
-        }
-      } catch (err) { /* ignore */ }
-    }, true); // capture = true
-
-    // === EVENT DELEGATION con fallback intelligente ===
-    document.addEventListener('click', function (e) {
-      const toggle = e.target.closest('.dropdown-toggle');
-      if (!toggle) return;
-      const dropdown = toggle.closest('.dropdown');
-      const menu = dropdown?.querySelector('.dropdown-menu');
-
-      // fallback function (usa e.preventDefault() qui)
-      const doFallback = () => {
-        try { e.preventDefault(); } catch (ignore) {}
-        // chiudi altri aperti
-        document.querySelectorAll('.dropdown.show').forEach(d => {
-          if (d !== dropdown) {
-            d.classList.remove('show');
-            d.querySelector('.dropdown-menu')?.classList.remove('show');
-            d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
-          }
-        });
-        const isShown = dropdown?.classList.contains('show');
-        if (!isShown) {
-          dropdown.classList.add('show');
-          if (menu) {
-            menu.classList.add('show');
-            // rimuoviamo eventuale display:none inline lasciato da altri
-            menu.style.display = 'block';
-          }
-          toggle.setAttribute('aria-expanded', 'true');
-        } else {
-          dropdown.classList.remove('show');
-          menu?.classList.remove('show');
-          // rimuoviamo lo stile inline che abbiamo messo
-          if (menu) menu.style.display = '';
-          toggle.setAttribute('aria-expanded', 'false');
-        }
-      };
-
-      // Se Bootstrap è presente, prova prima con lui; se dopo breve non apre, applica fallback
-      if (typeof bootstrap !== 'undefined') {
-        try {
-          // crea/ottieni istanza (per essere sicuri)
-          ensureBootstrapInstance(toggle);
-          // lascia che bootstrap provi ad aprire — poi verifichiamo
-          setTimeout(() => {
-            const opened = dropdown.classList.contains('show');
-            if (!opened) {
-              // bootstrap non ha aperto -> fallback manuale
-              doFallback();
+        toggle.addEventListener('show.bs.dropdown', () => {
+          document.querySelectorAll('.dropdown.show').forEach(opened => {
+            if (opened !== toggle.closest('.dropdown')) {
+              const otherToggle = opened.querySelector('.dropdown-toggle');
+              if (otherToggle) {
+                const otherInstance = bootstrap.Dropdown.getInstance(otherToggle);
+                if (otherInstance) otherInstance.hide();
+              }
             }
-          }, 80); // 80ms è sufficiente nella maggior parte dei casi
-          return;
-        } catch (err) {
-          console.warn('SAI: bootstrap toggle error, user fallback', err);
-          // caduta nel fallback sottostante
-        }
-      }
-
-      // Se Bootstrap non c'è, esegui fallback immediato
-      doFallback();
-    });
-
-    // --- Esc per chiudere dropdown aperti ---
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.dropdown.show').forEach(d => {
-          d.classList.remove('show');
-          d.querySelector('.dropdown-menu')?.classList.remove('show');
-          d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
-        });
-      }
-    });
-
-    // === Observer per reinizializzare se la navbar cambia (reinit bootstrap instances) ===
-    const mo = new MutationObserver(() => {
-      if (typeof bootstrap !== 'undefined') {
-        try {
-          document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-            bootstrap.Dropdown.getOrCreateInstance(el);
           });
-        } catch (err) {
-          console.warn('SAI: MutationObserver reinit error', err);
-        }
+        });
+      });
+    }
+    let tries = 0;
+    const checkBootstrap = setInterval(() => {
+      if (typeof bootstrap !== 'undefined') {
+        clearInterval(checkBootstrap);
+        initDropdowns();
+      } else if (++tries > 20) {
+        clearInterval(checkBootstrap);
       }
-    });
-    mo.observe(navbarHTML, { childList: true, subtree: true });
+    }, 200);
 
-    // === THEME TOGGLE ===
     const themeToggles = document.querySelectorAll('.themeToggle');
 
     function updateThemeIcons() {
@@ -240,36 +142,17 @@
       themeToggles.forEach(btn => {
         btn.innerHTML = `<i data-lucide="${isDark ? 'moon' : 'sun'}"></i>`;
       });
-      try { lucide.createIcons(); } catch (e) { }
+      try { lucide.createIcons(); } catch(e) {}
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
     themeToggles.forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme');
-        document.querySelector('.theme-navbar')?.classList.toggle('dark-theme');
         updateThemeIcons();
       });
     });
 
     updateThemeIcons();
-
-    // === Offcanvas close on link click ===
-    document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) return;
-        const offEl = document.getElementById('offcanvasNavbar');
-        if (!offEl) return;
-        if (typeof bootstrap !== 'undefined') {
-          try {
-            const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
-            inst.hide();
-          } catch (e) {
-            offEl.classList.remove('show');
-          }
-        }
-      });
-    });
-
-  } // end initNavbar
+  }
 })();
