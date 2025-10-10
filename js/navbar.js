@@ -1,4 +1,7 @@
 (function () {
+  if (window.__sai_nav_inited) return;
+  window.__sai_nav_inited = true;
+
   const navbarHTML = document.querySelector(".navbarMain");
 
   const savedTheme = localStorage.getItem('theme');
@@ -8,6 +11,7 @@
 
   function initNavbar() {
     if (!navbarHTML) return;
+
     navbarHTML.innerHTML = `
 <nav class="navbar navbar-expand-xxl sticky-top shadow theme-navbar" 
      style="background: linear-gradient(to right, #e0f2ff, #a6c9e2, #5f99d9, #3c6bbd, #1e3a8a); font-family: 'Montserrat', sans-serif; z-index: 1030; top: 0;">
@@ -98,61 +102,166 @@
 </nav>
     `;
 
-    try { lucide.createIcons(); } catch(e){ console.warn('lucide.createIcons error', e); }
+    try { lucide.createIcons(); } catch (e) { console.warn('lucide.createIcons error', e); }
 
     if (!document.getElementById('sai-dd-style')) {
       const style = document.createElement('style');
       style.id = 'sai-dd-style';
-      style.innerHTML = `.dropdown-menu{ z-index: 20000 !important; } .dropdown{ position: relative; }`;
+      style.innerHTML = `
+        .dropdown-menu{ z-index:20000!important; }
+        .dropdown{ position:relative; }
+        .dropdown-menu.show,
+        .dropdown.show > .dropdown-menu {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      `;
       document.head.appendChild(style);
     }
-    function initDropdowns() {
-      if (typeof bootstrap === 'undefined') return;
 
-      document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-        const instance = bootstrap.Dropdown.getOrCreateInstance(toggle);
-
-        toggle.addEventListener('show.bs.dropdown', () => {
-          document.querySelectorAll('.dropdown.show').forEach(opened => {
-            if (opened !== toggle.closest('.dropdown')) {
-              const otherToggle = opened.querySelector('.dropdown-toggle');
-              if (otherToggle) {
-                const otherInstance = bootstrap.Dropdown.getInstance(otherToggle);
-                if (otherInstance) otherInstance.hide();
-              }
-            }
-          });
-        });
-      });
-    }
-    let tries = 0;
-    const checkBootstrap = setInterval(() => {
-      if (typeof bootstrap !== 'undefined') {
-        clearInterval(checkBootstrap);
-        initDropdowns();
-      } else if (++tries > 20) {
-        clearInterval(checkBootstrap);
+    function ensureBootstrapInstance(toggle) {
+      if (typeof bootstrap === 'undefined' || !toggle) return false;
+      try {
+        let inst = bootstrap.Dropdown.getInstance(toggle);
+        if (!inst) inst = bootstrap.Dropdown.getOrCreateInstance(toggle);
+        return !!inst;
+      } catch (err) {
+        console.warn('SAI: ensureBootstrapInstance error', err);
+        return false;
       }
-    }, 200);
+    }
+
+    document.addEventListener('pointerdown', function (e) {
+      try {
+        const toggle = e.target.closest('.dropdown-toggle');
+        if (!toggle) return;
+        if (typeof bootstrap !== 'undefined') ensureBootstrapInstance(toggle);
+      } catch (err) {}
+    }, true);
+    if (typeof bootstrap !== 'undefined') {
+      document.addEventListener('shown.bs.dropdown', function (ev) {
+        const toggle = ev.target;
+        const opened = toggle?.closest('.dropdown');
+        if (!opened) return;
+        document.querySelectorAll('.dropdown.show').forEach(d => {
+          if (d === opened) return;
+          const otherToggle = d.querySelector('.dropdown-toggle');
+          if (otherToggle) {
+            try {
+              const otherInst = bootstrap.Dropdown.getInstance(otherToggle);
+              if (otherInst) {
+                otherInst.hide();
+              } else {
+                d.classList.remove('show');
+                d.querySelector('.dropdown-menu')?.classList.remove('show');
+                otherToggle.setAttribute('aria-expanded', 'false');
+              }
+            } catch (err) {
+              d.classList.remove('show');
+              d.querySelector('.dropdown-menu')?.classList.remove('show');
+              otherToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }, false);
+    }
+
+    document.addEventListener('click', function (e) {
+      const toggle = e.target.closest('.dropdown-toggle');
+      if (!toggle) return;
+
+      if (typeof bootstrap !== 'undefined') {
+        return;
+      }
+
+      e.preventDefault();
+      const dropdown = toggle.closest('.dropdown');
+      if (!dropdown) return;
+      const menu = dropdown.querySelector('.dropdown-menu');
+
+      document.querySelectorAll('.dropdown.show').forEach(d => {
+        if (d !== dropdown) {
+          d.classList.remove('show');
+          d.querySelector('.dropdown-menu')?.classList.remove('show');
+          d.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      const isShown = dropdown.classList.contains('show');
+      if (!isShown) {
+        dropdown.classList.add('show');
+        if (menu) menu.classList.add('show');
+        toggle.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.classList.remove('show');
+        if (menu) menu.classList.remove('show');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.dropdown.show').forEach(d => {
+          const t = d.querySelector('.dropdown-toggle');
+          d.classList.remove('show');
+          d.querySelector('.dropdown-menu')?.classList.remove('show');
+          if (t) t.setAttribute('aria-expanded', 'false');
+
+          if (typeof bootstrap !== 'undefined' && t) {
+            try {
+              const inst = bootstrap.Dropdown.getInstance(t);
+              if (inst) inst.hide();
+            } catch (err) {}
+          }
+        });
+      }
+    });
+
+    const mo = new MutationObserver(() => {
+      if (typeof bootstrap !== 'undefined') {
+        try {
+          document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+            bootstrap.Dropdown.getOrCreateInstance(el);
+          });
+        } catch (err) {}
+      }
+    });
+    mo.observe(navbarHTML, { childList: true, subtree: true });
 
     const themeToggles = document.querySelectorAll('.themeToggle');
-
     function updateThemeIcons() {
       const isDark = document.body.classList.contains('dark-theme');
       themeToggles.forEach(btn => {
         btn.innerHTML = `<i data-lucide="${isDark ? 'moon' : 'sun'}"></i>`;
       });
-      try { lucide.createIcons(); } catch(e) {}
+      try { lucide.createIcons(); } catch (e) {}
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
-
     themeToggles.forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme');
+        document.querySelector('.theme-navbar')?.classList.toggle('dark-theme');
         updateThemeIcons();
       });
     });
-
     updateThemeIcons();
-  }
+    document.querySelectorAll('#offcanvasNavbar a').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        if (anchor.matches('[data-bs-toggle="dropdown"], .dropdown-toggle')) return;
+        const offEl = document.getElementById('offcanvasNavbar');
+        if (!offEl) return;
+        if (typeof bootstrap !== 'undefined') {
+          try {
+            const inst = bootstrap.Offcanvas.getInstance(offEl) || new bootstrap.Offcanvas(offEl);
+            inst.hide();
+          } catch (e) {
+            offEl.classList.remove('show');
+          }
+        }
+      });
+    });
+
+  } 
 })();
